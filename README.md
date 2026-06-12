@@ -538,4 +538,69 @@ console.log(calculateDiscount('abc', 'user', false))  // Invalid price
 
 ---
 
+## **B4: Reference Bugs & Deep Clone Solutions**
+
+```javascript
+// B4: Reference bugs and how to fix them
+
+// ❌ BUG 1: Shallow copy with nested arrays
+// Problem: Spread operator only copies first level
+const cart1 = { items: ['JS Book', 'React Book'], total: 150 }
+const cart2 = { ...cart1 }  // ❌ items array is still shared reference
+cart2.items.push('Node Book')
+console.log('cart1 items:', cart1.items)  // ❌ ['JS Book', 'React Book', 'Node Book'] - MUTATED!
+
+// ✅ FIX 1: Deep copy nested structures
+const cart2Fixed = { ...cart1, items: [...cart1.items] }
+cart2Fixed.items.push('Node Book')
+console.log('cart1 items:', cart1.items)  // ✅ ['JS Book', 'React Book'] - unchanged!
+
+---
+
+// ❌ BUG 2: Function should not mutate original
+// Problem: Direct object modification
+function applyTaxBuggy(order) {
+  order.total = order.total * 1.17  // ❌ Mutates original!
+  return order
+}
+const myOrder = { id: 1, total: 100 }
+const taxedOrder = applyTaxBuggy(myOrder)
+console.log('Original total:', myOrder.total)  // ❌ 117 - MUTATED!
+
+// ✅ FIX 2: Return new object without mutation
+function applyTax(order) {
+  return { ...order, total: order.total * 1.17 }  // ✅ Creates new object
+}
+const myOrder2 = { id: 1, total: 100 }
+const taxedOrder2 = applyTax(myOrder2)
+console.log('Original total:', myOrder2.total)  // ✅ 100 - unchanged!
+console.log('Taxed total:', taxedOrder2.total)   // ✅ 117
+
+---
+
+// ❌ BUG 3: Shallow reset doesn't handle nested objects
+// Problem: Nested objects are still shared
+const defaultConfig = { theme: 'dark', lang: 'en', nested: { fontSize: 14 } }
+const appConfig = { theme: 'light', lang: 'ur', nested: { fontSize: 20 } }
+const buggyReset = { ...defaultConfig }  // ❌ nested object is shared reference
+buggyReset.nested.fontSize = 30
+console.log('defaultConfig fontSize:', defaultConfig.nested.fontSize)  // ❌ 30 - MUTATED!
+
+// ✅ FIX 3: Use structureClone for deep copy
+const deepResetConfig = structureClone(defaultConfig)  // ✅ Complete deep copy
+deepResetConfig.nested.fontSize = 30
+console.log('defaultConfig fontSize:', defaultConfig.nested.fontSize)  // ✅ 14 - unchanged!
+console.log('Reset config fontSize:', deepResetConfig.nested.fontSize)  // ✅ 30
+
+---
+
+// Summary of Copy Methods:
+// 1. Spread {...obj} = Shallow copy (nested objects still shared)
+// 2. Object.assign({}, obj) = Shallow copy (nested objects still shared)
+// 3. structureClone(obj) = Deep copy (completely independent)
+// 4. JSON.parse(JSON.stringify(obj)) = Deep copy (limited compatibility)
+```
+
+---
+
 **Happy Learning! 🎓**
