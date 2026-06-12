@@ -603,4 +603,80 @@ console.log('Reset config fontSize:', deepResetConfig.nested.fontSize)  // ✅ 3
 
 ---
 
+## **B5: Pure Functions Library**
+
+```javascript
+// B5: Pure Functions - Functions that don't mutate input and are predictable
+
+// Pure Function 1: Add item to cart (returns new array)
+function addToCart(cart, item) {
+  return [...cart, item]  // ✅ Creates new array, original unchanged
+}
+
+// Pure Function 2: Update user age (returns new object)
+function updateUserAge(user, newAge) {
+  return { ...user, age: newAge }  // ✅ Creates new object, original unchanged
+}
+
+// Pure Function 3: Increment player score (uses computed property names)
+function incrementScore(scores, playerName) {
+  return { ...scores, [playerName]: (scores[playerName] || 0) + 1 }  // ✅ Safe increment
+}
+
+// Pure Function 4: Reverse string (no side effects)
+function reverseString(str) {
+  return str.split('').reverse().join('')  // ✅ Returns new string
+}
+
+// Pure Function 5: Remove item by index (returns new array)
+function removeItem(arr, index) {
+  return arr.filter((_, i) => i !== index)  // ✅ Creates new array
+}
+
+---
+
+// TEST CASES - Run these
+
+// Test 1: addToCart
+const cart = ['milk', 'eggs']
+const newCart = addToCart(cart, 'bread')
+console.log('Original cart:', cart)          // ['milk', 'eggs']
+console.log('New cart:', newCart)            // ['milk', 'eggs', 'bread']
+
+// Test 2: updateUserAge
+const user = { name: 'Asad', age: 25 }
+const newUser = updateUserAge(user, 26)
+console.log('Original user age:', user.age)  // 25
+console.log('New user age:', newUser.age)    // 26
+
+// Test 3: incrementScore
+const scores = { ali: 5, sara: 8 }
+const updatedScores = incrementScore(scores, 'ali')
+console.log('Original scores:', scores)      // { ali: 5, sara: 8 }
+console.log('Updated scores:', updatedScores)// { ali: 6, sara: 8 }
+
+// Test 4: reverseString
+const text = 'hello'
+const reversed = reverseString(text)
+console.log('Original text:', text)          // 'hello'
+console.log('Reversed text:', reversed)      // 'olleh'
+
+// Test 5: removeItem
+const items = [10, 20, 30, 40]
+const filtered = removeItem(items, 2)
+console.log('Original items:', items)       // [10, 20, 30, 40]
+console.log('Without index 2:', filtered)   // [10, 20, 40]
+
+---
+
+// KEY PRINCIPLES of Pure Functions:
+// 1. ✅ Same input = Same output (predictable)
+// 2. ✅ No side effects (don't mutate input)
+// 3. ✅ Don't depend on external state
+// 4. ✅ Always return new data, don't modify original
+// 5. ✅ Make debugging easier and code more testable
+```
+
+---
+
 **Happy Learning! 🎓**
