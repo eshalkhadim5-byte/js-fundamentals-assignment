@@ -461,4 +461,35 @@ console.log('final a:', a) // 99
 
 ---
 
+## **B2: Type Analyser Function**
+
+```javascript
+// B2: typeAnalyser function - analyze data types and truthiness
+
+function typeAnalyser(value) {
+  let type = typeof value
+  if (value === null) type = 'null'
+  if (Array.isArray(value)) type = 'array'
+  return {
+    input: value,
+    typeofResult: typeof value,
+    actualType: type,
+    isFalsy: !value,
+    isTruthy: !!value
+  }
+}
+
+// 8 test cases - MUST run
+console.log(typeAnalyser(42))
+console.log(typeAnalyser('hello'))
+console.log(typeAnalyser(null))
+console.log(typeAnalyser([]))
+console.log(typeAnalyser(undefined))
+console.log(typeAnalyser(true))
+console.log(typeAnalyser(0))
+console.log(typeAnalyser(''))
+```
+
+---
+
 **Happy Learning! 🎓**
