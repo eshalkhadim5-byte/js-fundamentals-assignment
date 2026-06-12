@@ -5,6 +5,10 @@
 
 ---
 
+# **Section A (Theory Questions)**
+
+---
+
 ## **Q1: Difference between var, let, const?**
 
 ### **Answer:**
