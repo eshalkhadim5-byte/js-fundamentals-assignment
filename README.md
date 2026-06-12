@@ -492,4 +492,50 @@ console.log(typeAnalyser(''))
 
 ---
 
+## **B3: Calculate Discount Function**
+
+```javascript
+// B3: calculateDiscount - applies 7 discount rules
+
+function calculateDiscount(price, userType, isMember) {
+  // Rule 1: Validate price input
+  if (typeof price !== 'number' || price <= 0) {
+    return 'Invalid price'
+  }
+
+  let finalPrice = price
+
+  // Rule 2-4: Apply discount based on userType and price
+  if (userType === 'admin') {
+    finalPrice = price * 0.5  // 50% discount for admin
+  } else if (price > 1000) {
+    finalPrice = price * 0.8  // 20% discount for price > 1000
+  } else if (price > 500) {
+    finalPrice = price * 0.9  // 10% discount for price > 500
+  }
+
+  // Rule 5: Apply member discount (5% off)
+  if (isMember === true) {
+    finalPrice = finalPrice * 0.95
+  }
+
+  // Rule 6: Ensure minimum price of 1
+  if (finalPrice < 1) {
+    finalPrice = 1
+  }
+
+  // Rule 7: Return formatted result to 2 decimal places
+  return finalPrice.toFixed(2)
+}
+
+// Test cases
+console.log(calculateDiscount(1200, 'user', false))   // 960.00
+console.log(calculateDiscount(1200, 'user', true))    // 912.00
+console.log(calculateDiscount(600, 'admin', true))    // 285.00
+console.log(calculateDiscount(-50, 'user', false))    // Invalid price
+console.log(calculateDiscount('abc', 'user', false))  // Invalid price
+```
+
+---
+
 **Happy Learning! 🎓**
