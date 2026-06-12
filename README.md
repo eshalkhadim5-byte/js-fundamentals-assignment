@@ -679,4 +679,333 @@ console.log('Without index 2:', filtered)   // [10, 20, 40]
 
 ---
 
+# **Section C (Scenario-based Problem Solving)**
+
+---
+
+## **C1: E-Commerce Product Filter + Search**
+
+```javascript
+// Real-world scenario: Build a product filter and search system
+
+const products = [
+  { id: 1, name: 'Laptop', price: 50000, category: 'Electronics', inStock: true },
+  { id: 2, name: 'Mouse', price: 2000, category: 'Electronics', inStock: true },
+  { id: 3, name: 'Monitor', price: 15000, category: 'Electronics', inStock: false },
+  { id: 4, name: 'Keyboard', price: 5000, category: 'Electronics', inStock: true },
+  { id: 5, name: 'USB Cable', price: 500, category: 'Accessories', inStock: true },
+  { id: 6, name: 'Desk Lamp', price: 3000, category: 'Furniture', inStock: true }
+]
+
+// Problem 1: Filter by price range
+function filterByPrice(products, minPrice, maxPrice) {
+  return products.filter(product => product.price >= minPrice && product.price <= maxPrice)
+}
+
+console.log('Products 1000-10000:', filterByPrice(products, 1000, 10000))
+// Output: Mouse, Keyboard, USB Cable, Desk Lamp
+
+---
+
+// Problem 2: Filter by category
+function filterByCategory(products, category) {
+  return products.filter(product => product.category === category)
+}
+
+console.log('Electronics:', filterByCategory(products, 'Electronics'))
+// Output: Laptop, Mouse, Monitor, Keyboard
+
+---
+
+// Problem 3: Search by name (case-insensitive)
+function searchByName(products, searchTerm) {
+  const lowerSearch = searchTerm.toLowerCase()
+  return products.filter(product => product.name.toLowerCase().includes(lowerSearch))
+}
+
+console.log('Search "key":', searchByName(products, 'key'))
+// Output: Keyboard
+
+---
+
+// Problem 4: Filter in-stock products only
+function filterInStock(products) {
+  return products.filter(product => product.inStock === true)
+}
+
+console.log('In stock:', filterInStock(products))
+// Output: All products except Monitor
+
+---
+
+// Problem 5: Combined filter (AND logic)
+function advancedFilter(products, options = {}) {
+  return products.filter(product => {
+    const matchPrice = !options.minPrice || product.price >= options.minPrice
+    const matchPrice2 = !options.maxPrice || product.price <= options.maxPrice
+    const matchCategory = !options.category || product.category === options.category
+    const matchStock = options.inStock === undefined || product.inStock === options.inStock
+    
+    return matchPrice && matchPrice2 && matchCategory && matchStock
+  })
+}
+
+console.log('Electronics, in stock, 2000-20000:', advancedFilter(products, {
+  category: 'Electronics',
+  inStock: true,
+  minPrice: 2000,
+  maxPrice: 20000
+}))
+// Output: Mouse, Keyboard
+
+---
+
+// Problem 6: Sort by price (ascending)
+function sortByPriceAsc(products) {
+  return [...products].sort((a, b) => a.price - b.price)
+}
+
+console.log('Cheapest first:', sortByPriceAsc(products))
+
+---
+
+// Problem 7: Calculate total inventory value
+function calculateInventoryValue(products) {
+  return products
+    .filter(p => p.inStock)
+    .reduce((total, product) => total + product.price, 0)
+}
+
+console.log('Total in-stock value:', calculateInventoryValue(products))
+// Output: 75500 (sum of all in-stock product prices)
+```
+
+---
+
+## **C2: Student Grade Management System**
+
+```javascript
+// Real-world scenario: Build a student grade tracking system
+
+const students = [
+  { id: 1, name: 'Ahmed', marks: [85, 90, 78, 92], passed: true },
+  { id: 2, name: 'Zara', marks: [92, 88, 95, 90], passed: true },
+  { id: 3, name: 'Ali', marks: [45, 50, 48, 52], passed: false },
+  { id: 4, name: 'Sara', marks: [75, 82, 79, 88], passed: true }
+]
+
+// Problem 1: Calculate average for each student
+function calculateAverage(marks) {
+  const sum = marks.reduce((total, mark) => total + mark, 0)
+  return (sum / marks.length).toFixed(2)
+}
+
+console.log('Ahmed average:', calculateAverage(students[0].marks))  // 86.25
+
+---
+
+// Problem 2: Get grade letter based on average
+function getGradeLetter(average) {
+  if (average >= 90) return 'A'
+  if (average >= 80) return 'B'
+  if (average >= 70) return 'C'
+  if (average >= 60) return 'D'
+  return 'F'
+}
+
+console.log('Ahmed grade:', getGradeLetter(calculateAverage(students[0].marks)))  // B
+
+---
+
+// Problem 3: Get top performer
+function getTopPerformer(students) {
+  return students.reduce((top, student) => {
+    const currentAvg = parseFloat(calculateAverage(student.marks))
+    const topAvg = parseFloat(calculateAverage(top.marks))
+    return currentAvg > topAvg ? student : top
+  })
+}
+
+console.log('Top performer:', getTopPerformer(students))  // Zara
+
+---
+
+// Problem 4: Get students who passed
+function getPassedStudents(students) {
+  return students.filter(student => student.passed === true)
+}
+
+console.log('Passed students:', getPassedStudents(students))
+
+---
+
+// Problem 5: Get lowest and highest marks for a student
+function getMarkRange(marks) {
+  return {
+    lowest: Math.min(...marks),
+    highest: Math.max(...marks)
+  }
+}
+
+console.log('Ahmed marks range:', getMarkRange(students[0].marks))  // { lowest: 78, highest: 92 }
+
+---
+
+// Problem 6: Sort students by average score (descending)
+function sortByAverage(students) {
+  return [...students].sort((a, b) => {
+    const avgA = parseFloat(calculateAverage(a.marks))
+    const avgB = parseFloat(calculateAverage(b.marks))
+    return avgB - avgA
+  })
+}
+
+console.log('Ranked students:', sortByAverage(students))
+
+---
+
+// Problem 7: Create detailed report for each student
+function generateReport(students) {
+  return students.map(student => ({
+    name: student.name,
+    average: calculateAverage(student.marks),
+    grade: getGradeLetter(parseFloat(calculateAverage(student.marks))),
+    status: student.passed ? '✅ Passed' : '❌ Failed'
+  }))
+}
+
+console.log('Class Report:', generateReport(students))
+```
+
+---
+
+## **C3: Bank Transaction Manager**
+
+```javascript
+// Real-world scenario: Build a transaction tracking system
+
+const accounts = {
+  'AC001': { balance: 50000, transactions: [] },
+  'AC002': { balance: 30000, transactions: [] }
+}
+
+// Problem 1: Deposit money
+function deposit(accountId, amount) {
+  if (amount <= 0) return 'Invalid amount'
+  if (!accounts[accountId]) return 'Account not found'
+  
+  accounts[accountId].balance += amount
+  accounts[accountId].transactions.push({
+    type: 'Deposit',
+    amount: amount,
+    date: new Date().toISOString(),
+    newBalance: accounts[accountId].balance
+  })
+  return `✅ Deposited ${amount}. New balance: ${accounts[accountId].balance}`
+}
+
+console.log(deposit('AC001', 5000))
+
+---
+
+// Problem 2: Withdraw money
+function withdraw(accountId, amount) {
+  if (amount <= 0) return 'Invalid amount'
+  if (!accounts[accountId]) return 'Account not found'
+  if (accounts[accountId].balance < amount) return '❌ Insufficient funds'
+  
+  accounts[accountId].balance -= amount
+  accounts[accountId].transactions.push({
+    type: 'Withdrawal',
+    amount: amount,
+    date: new Date().toISOString(),
+    newBalance: accounts[accountId].balance
+  })
+  return `✅ Withdrawn ${amount}. New balance: ${accounts[accountId].balance}`
+}
+
+console.log(withdraw('AC001', 2000))
+
+---
+
+// Problem 3: Transfer between accounts
+function transfer(fromId, toId, amount) {
+  if (amount <= 0) return 'Invalid amount'
+  if (!accounts[fromId] || !accounts[toId]) return 'Account not found'
+  if (accounts[fromId].balance < amount) return '❌ Insufficient funds'
+  
+  accounts[fromId].balance -= amount
+  accounts[toId].balance += amount
+  
+  accounts[fromId].transactions.push({
+    type: 'Transfer out',
+    amount: amount,
+    to: toId,
+    date: new Date().toISOString(),
+    newBalance: accounts[fromId].balance
+  })
+  
+  accounts[toId].transactions.push({
+    type: 'Transfer in',
+    amount: amount,
+    from: fromId,
+    date: new Date().toISOString(),
+    newBalance: accounts[toId].balance
+  })
+  
+  return `✅ Transferred ${amount} from ${fromId} to ${toId}`
+}
+
+console.log(transfer('AC001', 'AC002', 3000))
+
+---
+
+// Problem 4: Get account balance
+function getBalance(accountId) {
+  if (!accounts[accountId]) return 'Account not found'
+  return accounts[accountId].balance
+}
+
+console.log('AC001 Balance:', getBalance('AC001'))
+
+---
+
+// Problem 5: Get transaction history
+function getTransactionHistory(accountId) {
+  if (!accounts[accountId]) return 'Account not found'
+  return accounts[accountId].transactions
+}
+
+console.log('AC001 Transactions:', getTransactionHistory('AC001'))
+
+---
+
+// Problem 6: Calculate total deposits
+function calculateTotalDeposits(accountId) {
+  if (!accounts[accountId]) return 'Account not found'
+  return accounts[accountId].transactions
+    .filter(t => t.type === 'Deposit')
+    .reduce((sum, t) => sum + t.amount, 0)
+}
+
+console.log('AC001 Total Deposits:', calculateTotalDeposits('AC001'))
+
+---
+
+// Problem 7: Find largest transaction
+function getLargestTransaction(accountId) {
+  if (!accounts[accountId]) return 'Account not found'
+  const transactions = accounts[accountId].transactions
+  if (transactions.length === 0) return 'No transactions'
+  
+  return transactions.reduce((largest, current) => 
+    current.amount > largest.amount ? current : largest
+  )
+}
+
+console.log('Largest transaction:', getLargestTransaction('AC001'))
+```
+
+---
+
 **Happy Learning! 🎓**
