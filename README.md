@@ -437,4 +437,8 @@ console.log(calculateGrade(60, 65, 70));  // "B"
 
 ---
 
+# **Section B (Coding Questions)**
+
+---
+
 **Happy Learning! 🎓**
