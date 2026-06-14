@@ -449,219 +449,28 @@ console.log(calculateGrade(60, 65, 70));  // "B"
 
 ## **B2: Type Analyser Function**
 
-```javascript
-// B2: typeAnalyser function - analyze data types and truthiness
-
-function typeAnalyser(value) {
-  let type = typeof value
-  if (value === null) type = 'null'
-  if (Array.isArray(value)) type = 'array'
-  return {
-    input: value,
-    typeofResult: typeof value,
-    actualType: type,
-    isFalsy: !value,
-    isTruthy: !!value
-  }
-}
-
-// 8 test cases - MUST run
-console.log(typeAnalyser(42))
-console.log(typeAnalyser('hello'))
-console.log(typeAnalyser(null))
-console.log(typeAnalyser([]))
-console.log(typeAnalyser(undefined))
-console.log(typeAnalyser(true))
-console.log(typeAnalyser(0))
-console.log(typeAnalyser(''))
-```
+<img width="1029" height="408" alt="Screenshot 2026-06-14 004410" src="https://github.com/user-attachments/assets/d0db5213-7e27-4f5d-9f5a-9142cfbb6865" />
 
 ---
 
 ## **B3: Calculate Discount Function**
 
-```javascript
-// B3: calculateDiscount - applies 7 discount rules
+<img width="412" height="537" alt="Screenshot 2026-06-14 004930" src="https://github.com/user-attachments/assets/f4f38c8f-6e60-43c9-b753-a265bc4d2022" />
 
-function calculateDiscount(price, userType, isMember) {
-  // Rule 1: Validate price input
-  if (typeof price !== 'number' || price <= 0) {
-    return 'Invalid price'
-  }
-
-  let finalPrice = price
-
-  // Rule 2-4: Apply discount based on userType and price
-  if (userType === 'admin') {
-    finalPrice = price * 0.5  // 50% discount for admin
-  } else if (price > 1000) {
-    finalPrice = price * 0.8  // 20% discount for price > 1000
-  } else if (price > 500) {
-    finalPrice = price * 0.9  // 10% discount for price > 500
-  }
-
-  // Rule 5: Apply member discount (5% off)
-  if (isMember === true) {
-    finalPrice = finalPrice * 0.95
-  }
-
-  // Rule 6: Ensure minimum price of 1
-  if (finalPrice < 1) {
-    finalPrice = 1
-  }
-
-  // Rule 7: Return formatted result to 2 decimal places
-  return finalPrice.toFixed(2)
-}
-
-// Test cases
-console.log(calculateDiscount(1200, 'user', false))   // 960.00
-console.log(calculateDiscount(1200, 'user', true))    // 912.00
-console.log(calculateDiscount(600, 'admin', true))    // 285.00
-console.log(calculateDiscount(-50, 'user', false))    // Invalid price
-console.log(calculateDiscount('abc', 'user', false))  // Invalid price
 ```
 
 ---
-
 ## **B4: Reference Bugs & Deep Clone Solutions**
 
-```javascript
-// B4: Reference bugs and how to fix them
 
-// ❌ BUG 1: Shallow copy with nested arrays
-// Problem: Spread operator only copies first level
-const cart1 = { items: ['JS Book', 'React Book'], total: 150 }
-const cart2 = { ...cart1 }  // ❌ items array is still shared reference
-cart2.items.push('Node Book')
-console.log('cart1 items:', cart1.items)  // ❌ ['JS Book', 'React Book', 'Node Book'] - MUTATED!
-
-// ✅ FIX 1: Deep copy nested structures
-const cart2Fixed = { ...cart1, items: [...cart1.items] }
-cart2Fixed.items.push('Node Book')
-console.log('cart1 items:', cart1.items)  // ✅ ['JS Book', 'React Book'] - unchanged!
-
----
-
-// ❌ BUG 2: Function should not mutate original
-// Problem: Direct object modification
-function applyTaxBuggy(order) {
-  order.total = order.total * 1.17  // ❌ Mutates original!
-  return order
-}
-const myOrder = { id: 1, total: 100 }
-const taxedOrder = applyTaxBuggy(myOrder)
-console.log('Original total:', myOrder.total)  // ❌ 117 - MUTATED!
-
-// ✅ FIX 2: Return new object without mutation
-function applyTax(order) {
-  return { ...order, total: order.total * 1.17 }  // ✅ Creates new object
-}
-const myOrder2 = { id: 1, total: 100 }
-const taxedOrder2 = applyTax(myOrder2)
-console.log('Original total:', myOrder2.total)  // ✅ 100 - unchanged!
-console.log('Taxed total:', taxedOrder2.total)   // ✅ 117
-
----
-
-// ❌ BUG 3: Shallow reset doesn't handle nested objects
-// Problem: Nested objects are still shared
-const defaultConfig = { theme: 'dark', lang: 'en', nested: { fontSize: 14 } }
-const appConfig = { theme: 'light', lang: 'ur', nested: { fontSize: 20 } }
-const buggyReset = { ...defaultConfig }  // ❌ nested object is shared reference
-buggyReset.nested.fontSize = 30
-console.log('defaultConfig fontSize:', defaultConfig.nested.fontSize)  // ❌ 30 - MUTATED!
-
-// ✅ FIX 3: Use structureClone for deep copy
-const deepResetConfig = structureClone(defaultConfig)  // ✅ Complete deep copy
-deepResetConfig.nested.fontSize = 30
-console.log('defaultConfig fontSize:', defaultConfig.nested.fontSize)  // ✅ 14 - unchanged!
-console.log('Reset config fontSize:', deepResetConfig.nested.fontSize)  // ✅ 30
-
----
-
-// Summary of Copy Methods:
-// 1. Spread {...obj} = Shallow copy (nested objects still shared)
-// 2. Object.assign({}, obj) = Shallow copy (nested objects still shared)
-// 3. structureClone(obj) = Deep copy (completely independent)
-// 4. JSON.parse(JSON.stringify(obj)) = Deep copy (limited compatibility)
-```
+<img width="478" height="447" alt="Screenshot 2026-06-14 023200" src="https://github.com/user-attachments/assets/e7211d7b-71e2-4be7-afe7-6bab310e2639" />
 
 ---
 
 ## **B5: Pure Functions Library**
 
-```javascript
-// B5: Pure Functions - Functions that don't mutate input and are predictable
+<img width="599" height="219" alt="Screenshot 2026-06-14 030428" src="https://github.com/user-attachments/assets/fd82dbb3-cb00-4eae-a9dc-4abc9eb2324c" />
 
-// Pure Function 1: Add item to cart (returns new array)
-function addToCart(cart, item) {
-  return [...cart, item]  // ✅ Creates new array, original unchanged
-}
-
-// Pure Function 2: Update user age (returns new object)
-function updateUserAge(user, newAge) {
-  return { ...user, age: newAge }  // ✅ Creates new object, original unchanged
-}
-
-// Pure Function 3: Increment player score (uses computed property names)
-function incrementScore(scores, playerName) {
-  return { ...scores, [playerName]: (scores[playerName] || 0) + 1 }  // ✅ Safe increment
-}
-
-// Pure Function 4: Reverse string (no side effects)
-function reverseString(str) {
-  return str.split('').reverse().join('')  // ✅ Returns new string
-}
-
-// Pure Function 5: Remove item by index (returns new array)
-function removeItem(arr, index) {
-  return arr.filter((_, i) => i !== index)  // ✅ Creates new array
-}
-
----
-
-// TEST CASES - Run these
-
-// Test 1: addToCart
-const cart = ['milk', 'eggs']
-const newCart = addToCart(cart, 'bread')
-console.log('Original cart:', cart)          // ['milk', 'eggs']
-console.log('New cart:', newCart)            // ['milk', 'eggs', 'bread']
-
-// Test 2: updateUserAge
-const user = { name: 'Asad', age: 25 }
-const newUser = updateUserAge(user, 26)
-console.log('Original user age:', user.age)  // 25
-console.log('New user age:', newUser.age)    // 26
-
-// Test 3: incrementScore
-const scores = { ali: 5, sara: 8 }
-const updatedScores = incrementScore(scores, 'ali')
-console.log('Original scores:', scores)      // { ali: 5, sara: 8 }
-console.log('Updated scores:', updatedScores)// { ali: 6, sara: 8 }
-
-// Test 4: reverseString
-const text = 'hello'
-const reversed = reverseString(text)
-console.log('Original text:', text)          // 'hello'
-console.log('Reversed text:', reversed)      // 'olleh'
-
-// Test 5: removeItem
-const items = [10, 20, 30, 40]
-const filtered = removeItem(items, 2)
-console.log('Original items:', items)       // [10, 20, 30, 40]
-console.log('Without index 2:', filtered)   // [10, 20, 40]
-
----
-
-// KEY PRINCIPLES of Pure Functions:
-// 1. ✅ Same input = Same output (predictable)
-// 2. ✅ No side effects (don't mutate input)
-// 3. ✅ Don't depend on external state
-// 4. ✅ Always return new data, don't modify original
-// 5. ✅ Make debugging easier and code more testable
-```
 
 ---
 
