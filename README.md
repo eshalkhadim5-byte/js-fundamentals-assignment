@@ -461,10 +461,19 @@ console.log(calculateGrade(60, 65, 70));  // "B"
 
 ---
 ## **B4: Reference Bugs & Deep Clone Solution**
-![Screenshot](https://github.com/user-attachments/assets/e4f825d1-e2ef-48ba-b91b-a1b46b678ec1)
+
+<a href="https://github.com/user-attachments/assets/ed904971-9571-4136-b750-101834c118f9" style="color: blue;">
+  <img width="478" height="447" alt="Screenshot 2026-06-14 023200" src="https://github.com/user-attachments/assets/ed904971-9571-4136-b750-101834c118f9" />
+</a>
 
 ---
+
 ## **B5: Pure Functions Library**
+
+<img width="599" height="219" alt="Screenshot 2026-06-14 030428" src="https://github.com/user-attachments/assets/0f3e64ce-24e2-4de8-a667-515ed6e35570" />
+
+
+
 
 
 
