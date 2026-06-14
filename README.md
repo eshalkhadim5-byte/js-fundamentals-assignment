@@ -462,22 +462,67 @@ console.log(calculateGrade(60, 65, 70));  // "B"
 ---
 ## **B4: Reference Bugs & Deep Clone Solution**
 
-<a href="https://github.com/user-attachments/assets/ed904971-9571-4136-b750-101834c118f9" style="color: blue;">
-  <img width="478" height="447" alt="Screenshot 2026-06-14 023200" src="https://github.com/user-attachments/assets/ed904971-9571-4136-b750-101834c118f9" />
-</a>
+
+// B4: Reference bugs toFixed
+
+// Fix 1 : Shallow copy bug
+
+
+
+const cart1 = { items: ['JS Book', 'React Book'], total: 150}
+const cart2 = {...cart1, items: [...cart1.items]}
+cart2.items.push('Node Book')
+console.log('cart1 items:', cart1.items) // Node Book 
+
+// Fix 2: Function mutation bug
+function applyTax(order) {
+    return {...order, total: order.total * 1.17}
+}
+    const myOrder = { id: 1, total: 100}
+    const taxedOrder = applyTax(myOrder)
+    console.log('Orginal totle:', myOrder.total) // 100
+    console.log('Taxed total:', taxedOrder.total) // 117
+
+// Fix 3: Deep reset bug
+function resetConfig(config) {
+    return structureClone(defaultConfig)
+}
+const defaultConfig = { theme: 'dark', lang: 'en', nested: { fontSize: 14}}
+const appConfig = { theme: 'light', lang: 'ur', nested: { fontSize: 20}}
+const newConfig = resetConfig(appConfig)
+console.log('Reset theme:', newConfig,theme) // dark
 
 ---
 
 ## **B5: Pure Functions Library**
 
-<img width="599" height="219" alt="Screenshot 2026-06-14 030428" src="https://github.com/user-attachments/assets/0f3e64ce-24e2-4de8-a667-515ed6e35570" />
 
 
 
+// 1. addToCart
+function addToCart(cart, item) {
+  return [...cart, item];
+}
 
+// 2. updateUserAge
+function updateUserAge(user, newAge) {
+  return { ...user, age: newAge };
+}
 
+// 3. incrementScore
+function incrementScore(scores, playerName) {
+  return { ...scores, [playerName]: scores[playerName] + 1 };
+}
 
+// 4. reverseString
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
 
+// 5. removeItem
+function removeItem(arr, index) {
+  return [...arr.slice(0, index), ...arr.slice(index + 1)];
+}
 
 
 ---
