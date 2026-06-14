@@ -443,7 +443,8 @@ console.log(calculateGrade(60, 65, 70));  // "B"
 
 ## **B1: Hoisting + TDZ + const reassignment fix**
 
-Screenshot 2026-06-13 234018
+<img width="337" height="353" alt="Screenshot 2026-06-13 234018" src="https://github.com/user-attachments/assets/30143937-f8f8-4444-8eda-964070005892" />
+
 
 
 ## **B2: Type Analyser Function**
